@@ -2,14 +2,11 @@ import signUpUser from './4-user-promise';
 import uploadPhoto from './5-photo-reject';
 
 export default function handleProfileSignup(firstName, lastName, fileName) {
-  const user = signUpUser(firstName, lastName);
-  const photo = uploadPhoto(fileName);
-
-  return Promise.allSettled([user, photo])
+  return Promise.allSettled([signUpUser(firstName, lastName), uploadPhoto(fileName)])
     .then((results) => {
       for (const result of results) {
         if (result.status === 'rejected') {
-          result.value = `Error: ${result.reason.message}`;
+          result.value = `Error: ${result.reason}`;
           delete result.reason;
           result.status = 'error';
         }
