@@ -8,7 +8,11 @@ export default class EVCar extends Car {
 
   // Methods
   cloneCar() {
-    // return an instance of Car
-    return new Car();
+    const CarClass = this.constructor[Symbol.species] || Car;
+    return new CarClass(this.brand, this.motor, this.color);
+  }
+
+  static get [Symbol.species]() {
+    return Car;
   }
 }
