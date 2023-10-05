@@ -5,6 +5,6 @@ babel.config.js
 node_modules/
 package-lock.json
 utils.js
-!0x04-TypeScript/task_0/package.json
+!0x04-TypeScript/task_*/package.json
 !0x04-TypeScript/task_0/.eslintrc.js
 *test.js
