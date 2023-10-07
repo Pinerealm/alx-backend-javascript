@@ -41,3 +41,14 @@ class StudentClass {
         return this.firstName;
     }
 }
+
+// Define the StudentConstructor interface
+interface StudentConstructor {
+    new(firstName: string, lastName: string): StudentClass;
+}
+
+// Define the StudentClass interface
+interface StudentClassInterface extends StudentClass {
+    displayName(): string;
+    workOnHomework(): string;
+}
