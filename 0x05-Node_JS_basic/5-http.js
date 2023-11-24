@@ -1,38 +1,47 @@
+// Create a more complex HTTP server using Node's HTTP module
 const http = require('http');
 const fs = require('fs');
 
+const database = process.argv[2];
+
 const app = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
   if (req.url === '/') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.write('This is the list of our students\n');
-
-    fs.readFile(process.argv[2], 'utf8', (err, data) => {
-      if (err) {
-        res.end(err.message);
+    fs.readFile(database, 'utf8', (error, data) => {
+      if (error) {
+        res.write('Cannot load the database');
       } else {
-        const contents = data.split('\n');
-        const students = contents.filter((item) => item);
+        let lines = data.split('\n');
+        lines = lines.filter((line) => line.length > 0);
+        lines.shift();
         const fields = {};
 
-        for (const i in students) {
-          if (i !== '0') {
-            const student = students[i].split(',');
-            if (!fields[student[3]]) {
-              fields[student[3]] = [];
-            }
-            fields[student[3]].push(student[0]);
+        lines.forEach((line) => {
+          const student = line.split(',');
+          if (!fields[student[3]]) {
+            fields[student[3]] = [];
+          }
+          fields[student[3]].push(student[0]);
+        });
+
+        const count = lines.length;
+        res.write(`Number of students: ${count}\n`);
+        for (const field in fields) {
+          if (field) {
+            const list = fields[field];
+            const countStudents = list.length;
+            res.write(`Number of students in ${field}: ${countStudents}. List: ${list.join(', ')}\n`);
           }
         }
-
-        res.write(`Number of students: ${students.length - 1}\n`);
-        res.write(`Number of students in CS: ${fields.CS.length}. List: ${fields.CS.join(', ')}\n`);
-        res.write(`Number of students in SWE: ${fields.SWE.length}. List: ${fields.SWE.join(', ')}\n`);
         res.end();
       }
     });
   }
 });
+
 app.listen(1245);
+module.exports = app;
