@@ -1,4 +1,4 @@
-*main.js
+*main*.js
 package.json
 babel.config.js
 .eslintrc.js
@@ -8,3 +8,4 @@ utils.js
 !0x04-TypeScript/task_*/package.json
 !0x04-TypeScript/task_0/.eslintrc.js
 *test.js
+database.csv
