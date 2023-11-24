@@ -1,27 +1,36 @@
+// Reading a file asynchronously with Node JS
 const fs = require('fs');
 
-module.exports = async function countStudents(path) {
-  fs.readFile(path, 'utf8', (err, data) => {
-    if (err) {
-      throw new Error('Cannot load the database');
-    } else {
-      const contents = data.split('\n');
-      const students = contents.filter((item) => item);
-      const fields = {};
+module.exports = function countStudents(path) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf8', (error, data) => {
+      if (error) {
+        reject(Error('Cannot load the database'));
+      } else {
+        let lines = data.split('\n');
+        lines = lines.filter((line) => line.length > 0);
+        lines.shift();
+        const fields = {};
 
-      for (const i in students) {
-        if (i !== '0') {
-          const student = students[i].split(',');
+        lines.forEach((line) => {
+          const student = line.split(',');
           if (!fields[student[3]]) {
             fields[student[3]] = [];
           }
           fields[student[3]].push(student[0]);
-        }
-      }
+        });
 
-      console.log(`Number of students: ${students.length - 1}`);
-      console.log(`Number of students in CS: ${fields.CS.length}. List: ${fields.CS.join(', ')}`);
-      console.log(`Number of students in SWE: ${fields.SWE.length}. List: ${fields.SWE.join(', ')}`);
-    }
+        const count = lines.length;
+        console.log(`Number of students: ${count}`);
+        for (const field in fields) {
+          if (field) {
+            const list = fields[field];
+            const countStudents = list.length;
+            console.log(`Number of students in ${field}: ${countStudents}. List: ${list.join(', ')}`);
+          }
+        }
+        resolve();
+      }
+    });
   });
 };
