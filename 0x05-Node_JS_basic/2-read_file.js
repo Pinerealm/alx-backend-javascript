@@ -1,25 +1,33 @@
+// Reading a file synchronously with Node JS
 const fs = require('fs');
 
 module.exports = function countStudents(path) {
   try {
-    const contents = fs.readFileSync(path, 'utf8').split('\n');
-    const students = contents.filter((item) => item);
+    const data = fs.readFileSync(path, 'utf8');
+    const lines = data.split('\n');
+    lines.shift(); lines.pop();
     const fields = {};
 
-    for (const i in students) {
-      if (i !== 0) {
-        const student = students[i].split(',');
+    lines.forEach((line) => {
+      if (line) {
+        const student = line.split(',');
         if (!fields[student[3]]) {
           fields[student[3]] = [];
         }
         fields[student[3]].push(student[0]);
       }
-    }
+    });
 
-    console.log(`Number of students: ${students.length - 1}`);
-    console.log(`Number of students in CS: ${fields.CS.length}. List: ${fields.CS.join(', ')}`);
-    console.log(`Number of students in SWE: ${fields.SWE.length}. List: ${fields.SWE.join(', ')}`);
-  } catch (err) {
+    const count = lines.length;
+    console.log(`Number of students: ${count}`);
+    for (const field in fields) {
+      if (field) {
+        const list = fields[field];
+        const countStudents = list.length;
+        console.log(`Number of students in ${field}: ${countStudents}. List: ${list.join(', ')}`);
+      }
+    }
+  } catch (error) {
     throw new Error('Cannot load the database');
   }
 };
