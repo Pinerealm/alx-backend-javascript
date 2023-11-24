@@ -7,15 +7,15 @@ const database = process.argv[2];
 const app = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
+
   if (req.url === '/') {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
+    res.write('This is the list of our students\n');
     fs.readFile(database, 'utf8', (error, data) => {
       if (error) {
-        res.statusCode = 404;
         res.end('Cannot load the database');
       } else {
-        res.write('This is the list of our students\n');
         let lines = data.split('\n');
         lines = lines.filter((line) => line.length > 0);
         lines.shift();
@@ -31,14 +31,15 @@ const app = http.createServer((req, res) => {
 
         const count = lines.length;
         res.write(`Number of students: ${count}\n`);
+        const tempStringList = [];
         for (const field in fields) {
           if (field) {
             const list = fields[field];
             const countStudents = list.length;
-            res.write(`Number of students in ${field}: ${countStudents}. List: ${list.join(', ')}\n`);
+            tempStringList.push(`Number of students in ${field}: ${countStudents}. List: ${list.join(', ')}`);
           }
         }
-        res.end();
+        res.end(tempStringList.join('\n'));
       }
     });
   }
