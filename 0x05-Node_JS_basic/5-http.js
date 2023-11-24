@@ -10,11 +10,12 @@ const app = http.createServer((req, res) => {
   if (req.url === '/') {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
-    res.write('This is the list of our students\n');
     fs.readFile(database, 'utf8', (error, data) => {
       if (error) {
-        res.write('Cannot load the database');
+        res.statusCode = 404;
+        res.end('Cannot load the database');
       } else {
+        res.write('This is the list of our students\n');
         let lines = data.split('\n');
         lines = lines.filter((line) => line.length > 0);
         lines.shift();
