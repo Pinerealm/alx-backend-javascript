@@ -1,4 +1,4 @@
-// Test for 0-calcul.js
+// Basic test with Mocha and Node assertion library
 const assert = require('assert');
 const calculateNumber = require('./0-calcul');
 
