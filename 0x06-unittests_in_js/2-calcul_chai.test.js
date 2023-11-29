@@ -1,6 +1,6 @@
 // Combining descriptions
 const expect = require('chai').expect;
-const calculateNumber = require('./1-calcul');
+const calculateNumber = require('./2-calcul_chai');
 
 describe('calculateNumber', () => {
   describe('SUM', () => {
@@ -22,7 +22,7 @@ describe('calculateNumber', () => {
     it('should return -3 when subtracting 3.7 from 1', () => {
       expect(calculateNumber('SUBTRACT', 1, 3.7)).to.equal(-3);
     });
-    it('should return 5 when subtracting 3.7 from 1.2', () => {
+    it('should return -3 when subtracting 3.7 from 1.2', () => {
       expect(calculateNumber('SUBTRACT', 1.2, 3.7)).to.equal(-3);
     });
   });
