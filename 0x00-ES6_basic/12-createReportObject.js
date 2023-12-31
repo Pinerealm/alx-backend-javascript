@@ -1,5 +1,5 @@
 export default function createReportObject(employeesList) {
-  const reportObject = {
+  return {
     allEmployees: {
       ...employeesList,
     },
@@ -7,6 +7,4 @@ export default function createReportObject(employeesList) {
       return Object.keys(employeesList).length;
     },
   };
-
-  return reportObject;
 }
