@@ -1,15 +1,6 @@
-export default function createIteratorObject(report) {
+export default function* createIteratorObject(report) {
   const employeesList = Object.values(report.allEmployees).flat();
-  let index = 0;
-  return {
-    next() {
-      if (index < employeesList.length) {
-        const value = employeesList[index];
-        index += 1;
-        return { value, done: false };
-      }
-      return { value: null, done: true };
-    },
-    [Symbol.iterator]() { return this; },
-  };
+  for (let i = 0; i < employeesList.length; i += 1) {
+    yield employeesList[i];
+  }
 }
