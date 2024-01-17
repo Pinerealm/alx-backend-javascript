@@ -9,3 +9,7 @@ utils.js
 !0x04-TypeScript/task_0/.eslintrc.js
 *test.js
 database.csv
+!0x05-Node_JS_basic/full_server/utils.js
+!0x06-unittests_in_js/*/package.json
+!0x06-unittests_in_js/*/*test.js
+!0x06-unittests_in_js/utils.js
