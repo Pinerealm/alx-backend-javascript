@@ -41,3 +41,12 @@ class StudentClass {
     return this.firstName;
   }
 }
+
+export interface StudentConstructor {
+  new (firstName: string, lastName: string): StudentClassInterface;
+}
+
+export interface StudentClassInterface {
+  displayName(): string;
+  workOnHomework(): string;
+}
