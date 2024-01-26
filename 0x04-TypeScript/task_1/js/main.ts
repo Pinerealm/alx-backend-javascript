@@ -1,5 +1,5 @@
 // Define the teacher interface
-interface Teacher {
+export interface Teacher {
   readonly firstName: string;
   readonly lastName: string;
   fullTimeEmployee: boolean;
@@ -9,22 +9,22 @@ interface Teacher {
 }
 
 // Define the director interface
-interface Directors extends Teacher {
+export interface Directors extends Teacher {
   numberOfReports: number;
 }
 
 // Define the printTeacher function
-function printTeacher(firstName: string, lastName: string): string {
+export function printTeacher(firstName: string, lastName: string): string {
   return `${firstName.charAt(0)}. ${lastName}`;
 }
 
 // Define the printTeacherFunction interface
-interface printTeacherFunction {
+export interface printTeacherFunction {
   (firstName: string, lastName: string): string;
 }
 
 // Define the class StudentClass
-class StudentClass {
+export class StudentClass {
   firstName: string;
   lastName: string;
 
